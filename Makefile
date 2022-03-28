@@ -1,2 +1,2 @@
 all:
-	gcc main.c -l allegro
+	gcc main.c -lallegro -lallegro_font
