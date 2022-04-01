@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "map.h"
 
 char **aloca_matriz(int linhas, int colunas)
 {
@@ -20,13 +21,12 @@ char **aloca_matriz(int linhas, int colunas)
     return mat;
 }
 
-char **le_nivel(char *nome_arquivo)
+t_map *le_nivel(char *nome_arquivo)
 {
+    t_map *mapa = NULL;
     FILE *nivel_txt = NULL;
     int i, j;
-    int linhas, colunas;
-    char **game_mat = NULL;
-    char *new_char;
+    char new_char;
 
     nivel_txt = fopen(nome_arquivo, "r");
     if (!nivel_txt)
@@ -35,42 +35,19 @@ char **le_nivel(char *nome_arquivo)
         exit(1);
     }
 
-    fscanf(nivel_txt, "%d", &linhas);
-    fscanf(nivel_txt, "%d", &colunas);
+    mapa = malloc(sizeof(t_map));
 
-    game_mat = aloca_matriz(linhas, colunas);
-    new_char = malloc(colunas * sizeof(char));
+    fscanf(nivel_txt, "%d %d\n", &mapa->linhas, &mapa->colunas);
 
-    // for (i = 0; i < linhas; i++)
-    // {
-    //     for (j = 0; j < colunas; j++)
-    //     {
-    //         new_char = fgetc(nivel_txt);
-    //         // putchar(new_char);
-    //         if (new_char != '\n')
-    //             game_mat[i][j] = new_char;
-    //     }
-    // }
+    mapa->game_mat = aloca_matriz(mapa->linhas, mapa->colunas);
 
-    for (i = 0; i < linhas; i++)
-    {
-        // fscanf(nivel_txt, "%s", game_mat[i]);
-        fgets(new_char, colunas + 1, nivel_txt);
-        if (strcmp(new_char, "\n") && strcmp(new_char, ""))
-            strcpy(game_mat[i], new_char);
+    for (i = 0; i < mapa->linhas; i++){
+        for (j = 0; j < mapa->colunas; j++)
+            fscanf(nivel_txt, "%c", &mapa->game_mat[i][j]);
+        fscanf(nivel_txt, "\n");
     }
-
-    // for (i = 0; i < linhas; i++)
-    // {
-    //     printf("\n%d: ", i);
-    //     for (j = 0; j < colunas; j++)
-    //     {
-    //         putchar(game_mat[i][j]);
-    //     }
-    //     // printf("\n");
-    // }
 
     fclose(nivel_txt);
 
-    return game_mat;
+    return mapa;
 }

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <allegro5/allegro.h>
+#include "map.h"
+
 // #include <allegro5/allegro_font.h>
 // #include <allegro5/allegro_image.h>
 
@@ -28,17 +30,16 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
     return assets[4];
 }
 
-void render(int d_height, int d_width, char **game_mat, ALLEGRO_BITMAP **assets)
+void render(t_map *mapa, ALLEGRO_BITMAP **assets)
 {
     int i, j;
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    for (int i = 0; i < d_height; i += 15)
+    for (int i = 0; i < mapa->linhas; i++)
     {
-        for (j = 0; j < d_width; j += 15)
+        for (j = 0; j < mapa->colunas; j++)
         {
-            al_draw_bitmap(get_asset(assets, game_mat[i][j]), i, 20, 0);
+            al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j*17, i*17, 0);
         }
     }
-
     al_flip_display();
 }

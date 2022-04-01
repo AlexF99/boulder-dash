@@ -4,6 +4,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
+#include "map.h"
 #include "level.h"
 #include "render.h"
 
@@ -18,15 +19,15 @@ void must_init(bool test, const char *description)
 
 int main()
 {
-    int d_height = 640;
+    int d_height = 800;
     int d_width = 480;
-    char **game_mat = NULL;
+    t_map *mapa = NULL;
 
     ALLEGRO_BITMAP **assets;
 
     assets = malloc(7 * sizeof(ALLEGRO_BITMAP *));
 
-    game_mat = le_nivel("mapa2.txt");
+    mapa = le_nivel("mapa2.txt");
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -81,20 +82,7 @@ int main()
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            render(d_height, d_width, game_mat, assets);
-            // al_clear_to_color(al_map_rgb(0, 0, 0));
-            // for (int i = 0; i < d_height; i += 15)
-            //     al_draw_bitmap(steel, i, 20, 0);
-
-            // for (int i = 0; i < d_height; i += 15)
-            //     al_draw_bitmap(steel, i, 450, 0);
-
-            // for (int i = 35; i < d_width - 20; i += 15)
-            //     al_draw_bitmap(steel, 0, i, 0);
-
-            // al_draw_bitmap(assets[0], 20, 40, 0);
-            al_flip_display();
-
+            render(mapa, assets);
             redraw = false;
         }
     }
