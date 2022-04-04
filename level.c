@@ -52,8 +52,8 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
             fscanf(nivel_txt, "%c", &mapa->game_mat[i][j]);
             if (mapa->game_mat[i][j] == '@')
             {
-                (*rockford)->x = i;
-                (*rockford)->y = j;
+                (*rockford)->y = i;
+                (*rockford)->x = j;
             }
         }
         fscanf(nivel_txt, "\n");

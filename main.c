@@ -8,6 +8,7 @@
 #include "rockford.h"
 #include "level.h"
 #include "render.h"
+#include "moves.h"
 
 void must_init(bool test, const char *description)
 {
@@ -72,6 +73,12 @@ int main()
     bool redraw = true;
     ALLEGRO_EVENT event;
 
+    #define KEY_SEEN     1
+    #define KEY_RELEASED 2
+
+    unsigned char key[ALLEGRO_KEY_MAX];
+    memset(key, 0, sizeof(key));
+
     al_start_timer(timer);
 
     while (1)
@@ -81,30 +88,34 @@ int main()
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // once again, no game logic. fishy? maybe.
+            if (key[ALLEGRO_KEY_UP])
+                move_rockford('u', &mapa, &rockford);
+            if (key[ALLEGRO_KEY_DOWN])
+                move_rockford('d', &mapa, &rockford);
+            if (key[ALLEGRO_KEY_LEFT])
+                move_rockford('l', &mapa, &rockford);
+            if (key[ALLEGRO_KEY_RIGHT])
+                move_rockford('r', &mapa, &rockford);
+            if(key[ALLEGRO_KEY_ESCAPE])
+                done = true;
+
+            for(int i = 0; i < ALLEGRO_KEY_MAX; i++)
+                key[i] &= KEY_SEEN;
+
             redraw = true;
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
-            if (event.keyboard.keycode == ALLEGRO_KEY_UP)
-                rockford->y--;
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
-                rockford->y++;
-            if (event.keyboard.keycode == ALLEGRO_KEY_LEFT)
-                rockford->x--;
-            if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
-                rockford->x++;
-
-            printf("X: %d\nY: %d\n", rockford->x, rockford->y);
-
-            if (event.keyboard.keycode != ALLEGRO_KEY_ESCAPE)
-                break;
+            key[event.keyboard.keycode] = KEY_SEEN | KEY_RELEASED;
+            break;
+        case ALLEGRO_EVENT_KEY_UP:
+            key[event.keyboard.keycode] &= KEY_RELEASED;
+            break;
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
             break;
         }
-
         if (done)
             break;
 
