@@ -27,7 +27,7 @@ int main()
 
     assets = malloc(7 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel("mapa2.txt");
+    mapa = le_nivel("mapa1.txt");
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
