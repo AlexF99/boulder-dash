@@ -24,21 +24,24 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
         return assets[6];
 
     default:
-        return assets[4];
+        return NULL;
     }
 
-    return assets[4];
+    return NULL;
 }
 
 void render(t_map *mapa, ALLEGRO_BITMAP **assets)
 {
     int i, j;
+    ALLEGRO_BITMAP *asset = NULL;
     al_clear_to_color(al_map_rgb(0, 0, 0));
     for (int i = 0; i < mapa->linhas; i++)
     {
         for (j = 0; j < mapa->colunas; j++)
         {
-            al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j*17, i*17, 0);
+            asset = get_asset(assets, mapa->game_mat[i][j]);
+            if (asset)
+                al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j * 17, i * 17, 0);
         }
     }
     al_flip_display();
