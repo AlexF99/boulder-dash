@@ -5,6 +5,7 @@
 #include <allegro5/allegro_image.h>
 
 #include "map.h"
+#include "rockford.h"
 #include "level.h"
 #include "render.h"
 
@@ -21,13 +22,15 @@ int main()
 {
     int d_height = 800;
     int d_width = 480;
+    int done = 0;
+    t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
     ALLEGRO_BITMAP **assets;
 
     assets = malloc(7 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel("mapa1.txt");
+    mapa = le_nivel("mapa1.txt", &rockford);
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -75,9 +78,34 @@ int main()
     {
         al_wait_for_event(queue, &event);
 
-        if (event.type == ALLEGRO_EVENT_TIMER)
+        switch (event.type)
+        {
+        case ALLEGRO_EVENT_TIMER:
+            // once again, no game logic. fishy? maybe.
             redraw = true;
-        else if ((event.type == ALLEGRO_EVENT_KEY_DOWN) || (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE))
+            break;
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_UP)
+                rockford->y--;
+            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
+                rockford->y++;
+            if (event.keyboard.keycode == ALLEGRO_KEY_LEFT)
+                rockford->x--;
+            if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+                rockford->x++;
+
+            printf("X: %d\nY: %d\n", rockford->x, rockford->y);
+
+            if (event.keyboard.keycode != ALLEGRO_KEY_ESCAPE)
+                break;
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            break;
+        }
+
+        if (done)
             break;
 
         if (redraw && al_is_event_queue_empty(queue))

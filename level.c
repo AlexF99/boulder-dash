@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "map.h"
+#include "rockford.h"
 
 char **aloca_matriz(int linhas, int colunas)
 {
@@ -21,7 +22,7 @@ char **aloca_matriz(int linhas, int colunas)
     return mat;
 }
 
-t_map *le_nivel(char *nome_arquivo)
+t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
 {
     t_map *mapa = NULL;
     FILE *nivel_txt = NULL;
@@ -36,14 +37,25 @@ t_map *le_nivel(char *nome_arquivo)
     }
 
     mapa = malloc(sizeof(t_map));
+    *rockford = malloc(sizeof(t_rockford));
+
+    (*rockford)->alive = 1;
 
     fscanf(nivel_txt, "%d %d\n", &mapa->linhas, &mapa->colunas);
 
     mapa->game_mat = aloca_matriz(mapa->linhas, mapa->colunas);
 
-    for (i = 0; i < mapa->linhas; i++){
+    for (i = 0; i < mapa->linhas; i++)
+    {
         for (j = 0; j < mapa->colunas; j++)
+        {
             fscanf(nivel_txt, "%c", &mapa->game_mat[i][j]);
+            if (mapa->game_mat[i][j] == '@')
+            {
+                (*rockford)->x = i;
+                (*rockford)->y = j;
+            }
+        }
         fscanf(nivel_txt, "\n");
     }
 
