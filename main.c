@@ -8,7 +8,6 @@
 #include "rockford.h"
 #include "level.h"
 #include "render.h"
-#include "moves.h"
 
 void must_init(bool test, const char *description)
 {
@@ -73,8 +72,8 @@ int main()
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-    #define KEY_SEEN     1
-    #define KEY_RELEASED 2
+#define KEY_SEEN 1
+#define KEY_RELEASED 2
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -89,17 +88,45 @@ int main()
         {
         case ALLEGRO_EVENT_TIMER:
             if (key[ALLEGRO_KEY_UP])
-                move_rockford('u', &mapa, &rockford);
+            {
+                if (mapa->game_mat[rockford->y - 1][rockford->x] != '#')
+                {
+                    mapa->game_mat[rockford->y][rockford->x] = ' ';
+                    rockford->y--;
+                    mapa->game_mat[rockford->y][rockford->x] = '@';
+                }
+            }
             if (key[ALLEGRO_KEY_DOWN])
-                move_rockford('d', &mapa, &rockford);
+            {
+                if (mapa->game_mat[rockford->y + 1][rockford->x] != '#')
+                {
+                    mapa->game_mat[rockford->y][rockford->x] = ' ';
+                    rockford->y++;
+                    mapa->game_mat[rockford->y][rockford->x] = '@';
+                }
+            }
             if (key[ALLEGRO_KEY_LEFT])
-                move_rockford('l', &mapa, &rockford);
+            {
+                if (mapa->game_mat[rockford->y][rockford->x - 1] != '#')
+                {
+                    mapa->game_mat[rockford->y][rockford->x] = ' ';
+                    rockford->x--;
+                    mapa->game_mat[rockford->y][rockford->x] = '@';
+                }
+            }
             if (key[ALLEGRO_KEY_RIGHT])
-                move_rockford('r', &mapa, &rockford);
-            if(key[ALLEGRO_KEY_ESCAPE])
+            {
+                if (mapa->game_mat[rockford->y][rockford->x + 1] != '#')
+                {
+                    mapa->game_mat[rockford->y][rockford->x] = ' ';
+                    rockford->x++;
+                    mapa->game_mat[rockford->y][rockford->x] = '@';
+                }
+            }
+            if (key[ALLEGRO_KEY_ESCAPE])
                 done = true;
 
-            for(int i = 0; i < ALLEGRO_KEY_MAX; i++)
+            for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                 key[i] &= KEY_SEEN;
 
             redraw = true;
