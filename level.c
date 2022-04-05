@@ -37,8 +37,10 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
     }
 
     mapa = malloc(sizeof(t_map));
-    *rockford = malloc(sizeof(t_rockford));
+    mapa->diamonds = 0;
+    mapa->door = 0;
 
+    *rockford = malloc(sizeof(t_rockford));
     (*rockford)->alive = 1;
     (*rockford)->diamonds = 0;
 
@@ -51,7 +53,9 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
         for (j = 0; j < mapa->colunas; j++)
         {
             fscanf(nivel_txt, "%c", &mapa->game_mat[i][j]);
-            if (mapa->game_mat[i][j] == '@')
+            if (mapa->game_mat[i][j] == '*')
+                mapa->diamonds++;
+            else if (mapa->game_mat[i][j] == '@')
             {
                 (*rockford)->y = i;
                 (*rockford)->x = j;

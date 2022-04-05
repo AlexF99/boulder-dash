@@ -22,6 +22,8 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
         return assets[5];
     case '*': // diamond
         return assets[6];
+    case 's': // exit
+        return assets[7];
 
     default:
         return NULL;
