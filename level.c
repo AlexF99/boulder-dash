@@ -40,6 +40,7 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
     *rockford = malloc(sizeof(t_rockford));
 
     (*rockford)->alive = 1;
+    (*rockford)->diamonds = 0;
 
     fscanf(nivel_txt, "%d %d\n", &mapa->linhas, &mapa->colunas);
 

@@ -3,8 +3,8 @@
 #include <string.h>
 #include <allegro5/allegro.h>
 #include "map.h"
-
-// #include <allegro5/allegro_font.h>
+#include "rockford.h"
+#include <allegro5/allegro_font.h>
 // #include <allegro5/allegro_image.h>
 
 ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
@@ -30,19 +30,26 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
     return NULL;
 }
 
-void render(t_map *mapa, ALLEGRO_BITMAP **assets)
+void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_FONT* font)
 {
     int i, j;
     ALLEGRO_BITMAP *asset = NULL;
+
+    int length = snprintf( NULL, 0, "%d", rockford->diamonds);
+    char* diamonds = malloc( length + 1 );
+    snprintf( diamonds, length + 1, "%d", rockford->diamonds);
+
     al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_draw_text(font, al_map_rgb(255, 255, 255), 5, 5, 0, diamonds);
     for (int i = 0; i < mapa->linhas; i++)
     {
         for (j = 0; j < mapa->colunas; j++)
         {
             asset = get_asset(assets, mapa->game_mat[i][j]);
             if (asset)
-                al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j * 17, i * 17, 0);
+                al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j * 17, (i * 17) + 17, 0);
         }
     }
+    free(diamonds);
     al_flip_display();
 }

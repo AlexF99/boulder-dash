@@ -35,7 +35,7 @@ int main()
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
 
-    ALLEGRO_TIMER *timer = al_create_timer(1.0 / 30.0);
+    ALLEGRO_TIMER *timer = al_create_timer(1.0 / 60.0);
     must_init(timer, "timer");
 
     ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
@@ -72,13 +72,15 @@ int main()
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-#define KEY_SEEN 1
-#define KEY_RELEASED 2
+    #define KEY_SEEN 1
+    #define KEY_RELEASED 2
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
 
     al_start_timer(timer);
+
+    char destino;
 
     while (1)
     {
@@ -89,8 +91,11 @@ int main()
         case ALLEGRO_EVENT_TIMER:
             if (key[ALLEGRO_KEY_UP])
             {
-                if (mapa->game_mat[rockford->y - 1][rockford->x] != '#')
+                destino = mapa->game_mat[rockford->y - 1][rockford->x];
+                if (destino != '#' && destino != 'o')
                 {
+                    if (destino == '*')
+                        rockford->diamonds++;
                     mapa->game_mat[rockford->y][rockford->x] = ' ';
                     rockford->y--;
                     mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -98,8 +103,11 @@ int main()
             }
             if (key[ALLEGRO_KEY_DOWN])
             {
-                if (mapa->game_mat[rockford->y + 1][rockford->x] != '#')
+                destino = mapa->game_mat[rockford->y + 1][rockford->x];
+                if (destino != '#' && destino != 'o')
                 {
+                    if (destino == '*')
+                        rockford->diamonds++;
                     mapa->game_mat[rockford->y][rockford->x] = ' ';
                     rockford->y++;
                     mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -107,8 +115,11 @@ int main()
             }
             if (key[ALLEGRO_KEY_LEFT])
             {
-                if (mapa->game_mat[rockford->y][rockford->x - 1] != '#')
+                destino = mapa->game_mat[rockford->y][rockford->x - 1];
+                if (destino != '#' && destino != 'o')
                 {
+                    if (destino == '*')
+                        rockford->diamonds++;
                     mapa->game_mat[rockford->y][rockford->x] = ' ';
                     rockford->x--;
                     mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -116,8 +127,11 @@ int main()
             }
             if (key[ALLEGRO_KEY_RIGHT])
             {
-                if (mapa->game_mat[rockford->y][rockford->x + 1] != '#')
+                destino = mapa->game_mat[rockford->y][rockford->x + 1];
+                if (destino != '#' && destino != 'o')
                 {
+                    if (destino == '*')
+                        rockford->diamonds++;
                     mapa->game_mat[rockford->y][rockford->x] = ' ';
                     rockford->x++;
                     mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -148,10 +162,12 @@ int main()
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            render(mapa, assets);
+            render(mapa, assets, rockford, font);
             redraw = false;
         }
     }
+
+    printf("diamonds: %d\n", rockford->diamonds);
 
     for (int i = 0; i < 7; i++)
         al_destroy_bitmap(assets[i]);
