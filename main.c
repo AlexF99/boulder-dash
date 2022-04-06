@@ -106,7 +106,7 @@ int main()
                         if (destino == '*')
                         {
                             rockford->diamonds++;
-                            rockford->points += 10;
+                            rockford->points += mapa->points_per_diamond;
                         }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->y--;
@@ -129,7 +129,7 @@ int main()
                         if (destino == '*')
                         {
                             rockford->diamonds++;
-                            rockford->points += 10;
+                            rockford->points += mapa->points_per_diamond;
                         }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->y++;
@@ -152,7 +152,7 @@ int main()
                         if (destino == '*')
                         {
                             rockford->diamonds++;
-                            rockford->points += 10;
+                            rockford->points += mapa->points_per_diamond;
                         }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->x--;
@@ -175,7 +175,7 @@ int main()
                         if (destino == '*')
                         {
                             rockford->diamonds++;
-                            rockford->points += 10;
+                            rockford->points += mapa->points_per_diamond;
                         }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->x++;
