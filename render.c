@@ -41,8 +41,31 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
     char* diamonds = malloc( length + 1 );
     snprintf( diamonds, length + 1, "%d", rockford->diamonds);
 
+    length = snprintf( NULL, 0, "%d", mapa->diamonds);
+    char* diamonds_to_open = malloc( length + 1 );
+    snprintf( diamonds_to_open, length + 1, "%d", mapa->diamonds);
+    
+    length = snprintf( NULL, 0, "%d", mapa->points_per_diamond);
+    char* points_per_diamond = malloc( length + 1 );
+    snprintf( points_per_diamond, length + 1, "%d", mapa->points_per_diamond);
+    
+    length = snprintf( NULL, 0, "%d", rockford->points);
+    char* points = malloc( length + 1 );
+    snprintf( points, length + 1, "%d", rockford->points);
+
+
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_draw_text(font, al_map_rgb(255, 255, 255), 5, 5, 0, diamonds);
+    al_draw_text(font, al_map_rgb(255, 255, 255), 23, 5, 0, "/");
+    al_draw_text(font, al_map_rgb(255, 255, 255), 35, 5, 0, diamonds_to_open);
+
+    al_draw_text(font, al_map_rgb(255, 255, 255), 100, 5, 0, "points per diamond: ");
+    al_draw_text(font, al_map_rgb(255, 255, 255), 260, 5, 0, points_per_diamond);
+    
+    al_draw_text(font, al_map_rgb(255, 255, 255), 300, 5, 0, "points: ");
+    al_draw_text(font, al_map_rgb(255, 255, 255), 360, 5, 0, points);
+
+
     for (int i = 0; i < mapa->linhas; i++)
     {
         for (j = 0; j < mapa->colunas; j++)
@@ -53,5 +76,6 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
         }
     }
     free(diamonds);
+    free(diamonds_to_open);
     al_flip_display();
 }

@@ -74,8 +74,8 @@ int main()
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-    #define KEY_SEEN 1
-    #define KEY_RELEASED 2
+#define KEY_SEEN 1
+#define KEY_RELEASED 2
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -96,12 +96,18 @@ int main()
                 destino = mapa->game_mat[rockford->y - 1][rockford->x];
                 if (destino != '#' && destino != 'o')
                 {
-                    if (destino == 's') {
+                    if (destino == 's')
+                    {
                         if (mapa->door)
                             done = true;
-                    } else {
+                    }
+                    else
+                    {
                         if (destino == '*')
+                        {
                             rockford->diamonds++;
+                            rockford->points += 10;
+                        }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->y--;
                         mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -113,12 +119,18 @@ int main()
                 destino = mapa->game_mat[rockford->y + 1][rockford->x];
                 if (destino != '#' && destino != 'o')
                 {
-                    if (destino == 's') {
+                    if (destino == 's')
+                    {
                         if (mapa->door)
                             done = true;
-                    } else {
+                    }
+                    else
+                    {
                         if (destino == '*')
+                        {
                             rockford->diamonds++;
+                            rockford->points += 10;
+                        }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->y++;
                         mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -130,12 +142,18 @@ int main()
                 destino = mapa->game_mat[rockford->y][rockford->x - 1];
                 if (destino != '#' && destino != 'o')
                 {
-                    if (destino == 's') {
+                    if (destino == 's')
+                    {
                         if (mapa->door)
                             done = true;
-                    } else {
+                    }
+                    else
+                    {
                         if (destino == '*')
+                        {
                             rockford->diamonds++;
+                            rockford->points += 10;
+                        }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->x--;
                         mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -147,12 +165,18 @@ int main()
                 destino = mapa->game_mat[rockford->y][rockford->x + 1];
                 if (destino != '#' && destino != 'o')
                 {
-                    if (destino == 's') {
+                    if (destino == 's')
+                    {
                         if (mapa->door)
                             done = true;
-                    } else {
+                    }
+                    else
+                    {
                         if (destino == '*')
+                        {
                             rockford->diamonds++;
+                            rockford->points += 10;
+                        }
                         mapa->game_mat[rockford->y][rockford->x] = ' ';
                         rockford->x++;
                         mapa->game_mat[rockford->y][rockford->x] = '@';
@@ -160,7 +184,8 @@ int main()
                 }
             }
 
-            if (mapa->diamonds == rockford->diamonds) mapa->door = 1;
+            if (mapa->diamonds == rockford->diamonds)
+                mapa->door = 1;
 
             if (key[ALLEGRO_KEY_ESCAPE])
                 done = true;
