@@ -38,6 +38,9 @@ int main()
     ALLEGRO_TIMER *timer = al_create_timer(1.0 / 60.0);
     must_init(timer, "timer");
 
+    ALLEGRO_TIMER *tick = al_create_timer(1.0 / 10.0);
+    must_init(tick, "tick");
+
     ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
     must_init(queue, "queue");
 
@@ -70,6 +73,7 @@ int main()
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(disp));
     al_register_event_source(queue, al_get_timer_event_source(timer));
+    al_register_event_source(queue, al_get_timer_event_source(tick));
 
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -81,6 +85,7 @@ int main()
     memset(key, 0, sizeof(key));
 
     al_start_timer(timer);
+    al_start_timer(tick);
 
     char destino;
 
@@ -91,108 +96,111 @@ int main()
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            if (key[ALLEGRO_KEY_UP])
+            if (event.timer.source == tick)
             {
-                destino = mapa->game_mat[rockford->y - 1][rockford->x];
-                if (destino != '#' && destino != 'o')
+                if (key[ALLEGRO_KEY_UP])
                 {
-                    if (destino == 's')
+                    destino = mapa->game_mat[rockford->y - 1][rockford->x];
+                    if (destino != '#' && destino != 'o')
                     {
-                        if (mapa->door)
-                            done = true;
-                    }
-                    else
-                    {
-                        if (destino == '*')
+                        if (destino == 's')
                         {
-                            rockford->diamonds++;
-                            rockford->points += mapa->points_per_diamond;
+                            if (mapa->door)
+                                done = true;
                         }
-                        mapa->game_mat[rockford->y][rockford->x] = ' ';
-                        rockford->y--;
-                        mapa->game_mat[rockford->y][rockford->x] = '@';
+                        else
+                        {
+                            if (destino == '*')
+                            {
+                                rockford->diamonds++;
+                                rockford->points += mapa->points_per_diamond;
+                            }
+                            mapa->game_mat[rockford->y][rockford->x] = ' ';
+                            rockford->y--;
+                            mapa->game_mat[rockford->y][rockford->x] = '@';
+                        }
                     }
                 }
-            }
-            if (key[ALLEGRO_KEY_DOWN])
-            {
-                destino = mapa->game_mat[rockford->y + 1][rockford->x];
-                if (destino != '#' && destino != 'o')
+                if (key[ALLEGRO_KEY_DOWN])
                 {
-                    if (destino == 's')
+                    destino = mapa->game_mat[rockford->y + 1][rockford->x];
+                    if (destino != '#' && destino != 'o')
                     {
-                        if (mapa->door)
-                            done = true;
-                    }
-                    else
-                    {
-                        if (destino == '*')
+                        if (destino == 's')
                         {
-                            rockford->diamonds++;
-                            rockford->points += mapa->points_per_diamond;
+                            if (mapa->door)
+                                done = true;
                         }
-                        mapa->game_mat[rockford->y][rockford->x] = ' ';
-                        rockford->y++;
-                        mapa->game_mat[rockford->y][rockford->x] = '@';
+                        else
+                        {
+                            if (destino == '*')
+                            {
+                                rockford->diamonds++;
+                                rockford->points += mapa->points_per_diamond;
+                            }
+                            mapa->game_mat[rockford->y][rockford->x] = ' ';
+                            rockford->y++;
+                            mapa->game_mat[rockford->y][rockford->x] = '@';
+                        }
                     }
                 }
-            }
-            if (key[ALLEGRO_KEY_LEFT])
-            {
-                destino = mapa->game_mat[rockford->y][rockford->x - 1];
-                if (destino != '#' && destino != 'o')
+                if (key[ALLEGRO_KEY_LEFT])
                 {
-                    if (destino == 's')
+                    destino = mapa->game_mat[rockford->y][rockford->x - 1];
+                    if (destino != '#' && destino != 'o')
                     {
-                        if (mapa->door)
-                            done = true;
-                    }
-                    else
-                    {
-                        if (destino == '*')
+                        if (destino == 's')
                         {
-                            rockford->diamonds++;
-                            rockford->points += mapa->points_per_diamond;
+                            if (mapa->door)
+                                done = true;
                         }
-                        mapa->game_mat[rockford->y][rockford->x] = ' ';
-                        rockford->x--;
-                        mapa->game_mat[rockford->y][rockford->x] = '@';
+                        else
+                        {
+                            if (destino == '*')
+                            {
+                                rockford->diamonds++;
+                                rockford->points += mapa->points_per_diamond;
+                            }
+                            mapa->game_mat[rockford->y][rockford->x] = ' ';
+                            rockford->x--;
+                            mapa->game_mat[rockford->y][rockford->x] = '@';
+                        }
                     }
                 }
-            }
-            if (key[ALLEGRO_KEY_RIGHT])
-            {
-                destino = mapa->game_mat[rockford->y][rockford->x + 1];
-                if (destino != '#' && destino != 'o')
+                if (key[ALLEGRO_KEY_RIGHT])
                 {
-                    if (destino == 's')
+                    destino = mapa->game_mat[rockford->y][rockford->x + 1];
+                    if (destino != '#' && destino != 'o')
                     {
-                        if (mapa->door)
-                            done = true;
-                    }
-                    else
-                    {
-                        if (destino == '*')
+                        if (destino == 's')
                         {
-                            rockford->diamonds++;
-                            rockford->points += mapa->points_per_diamond;
+                            if (mapa->door)
+                                done = true;
                         }
-                        mapa->game_mat[rockford->y][rockford->x] = ' ';
-                        rockford->x++;
-                        mapa->game_mat[rockford->y][rockford->x] = '@';
+                        else
+                        {
+                            if (destino == '*')
+                            {
+                                rockford->diamonds++;
+                                rockford->points += mapa->points_per_diamond;
+                            }
+                            mapa->game_mat[rockford->y][rockford->x] = ' ';
+                            rockford->x++;
+                            mapa->game_mat[rockford->y][rockford->x] = '@';
+                        }
                     }
                 }
+
+                if (mapa->diamonds == rockford->diamonds)
+                    mapa->door = 1;
+
+                if (key[ALLEGRO_KEY_ESCAPE])
+                    done = true;
+
+                for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
+                    key[i] &= KEY_SEEN;
             }
-
-            if (mapa->diamonds == rockford->diamonds)
-                mapa->door = 1;
-
-            if (key[ALLEGRO_KEY_ESCAPE])
-                done = true;
-
-            for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
-                key[i] &= KEY_SEEN;
-
+        
             redraw = true;
             break;
 
@@ -223,6 +231,7 @@ int main()
     al_destroy_font(font);
     al_destroy_display(disp);
     al_destroy_timer(timer);
+    al_destroy_timer(tick);
     al_destroy_event_queue(queue);
 
     return 0;
