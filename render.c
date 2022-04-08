@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <allegro5/allegro.h>
 #include "map.h"
 #include "rockford.h"
+#include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
-// #include <allegro5/allegro_image.h>
 
 ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
 {
