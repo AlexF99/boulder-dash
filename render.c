@@ -25,7 +25,11 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
         return assets[7];
 
     default:
-        return NULL;
+        if (key >= '0' && key <= '3')
+        {
+            return assets[5];
+        }
+        
     }
 
     return NULL;

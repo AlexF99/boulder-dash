@@ -114,7 +114,10 @@ int main()
 
                 for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                     key[i] &= KEY_SEEN;
+                
+                gravity(mapa, rockford, &done);
             }
+
         
             redraw = true;
             break;
