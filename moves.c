@@ -19,7 +19,7 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done)
     case 'r':
         destino = mapa->game_mat[rockford->y][rockford->x + 1];
         break;
-    
+
     default:
         destino = ' ';
         break;
@@ -67,14 +67,33 @@ void gravity(t_map *mapa, t_rockford *rockford, int *done)
 {
     int i, j;
 
-    for (i = 0; i < mapa->linhas; i++) {
-        for (j = 0; j < mapa->colunas; j++) {
+    for (i = 0; i < mapa->linhas; i++)
+    {
+        for (j = 0; j < mapa->colunas; j++)
+        {
             if (mapa->game_mat[i][j] != '#')
             {
-                if (mapa->game_mat[i][j] == 'o' && mapa->game_mat[i + 1][j] == ' ')
-                    mapa->game_mat[i][j] = '0';
+                if (mapa->game_mat[i][j] == 'o')
+                {
+                    if (mapa->game_mat[i + 1][j] == ' ')
+                        mapa->game_mat[i][j] = '0';
+                    else if (mapa->game_mat[i + 1][j] == 'o')
+                    {
+                        if (mapa->game_mat[i][j + 1] == ' ' && mapa->game_mat[i + 1][j + 1] == ' ')
+                        {
+                            mapa->game_mat[i][j] = ' ';
+                            mapa->game_mat[i][j + 1] = 'o';
+                        }
+                        else if (mapa->game_mat[i][j - 1] == ' ' && mapa->game_mat[i + 1][j - 1] == ' ')
+                        {
+                            mapa->game_mat[i][j] = ' ';
+                            mapa->game_mat[i][j - 1] = 'o';
+                        }
+                    }
+                }
 
-                if (mapa->game_mat[i][j] >= '0' && mapa->game_mat[i][j] < '3') { // caindo
+                if (mapa->game_mat[i][j] >= '0' && mapa->game_mat[i][j] < '3')
+                { // caindo
                     if (mapa->game_mat[i + 1][j] == ' ')
                         mapa->game_mat[i][j]++;
                     else if (mapa->game_mat[i + 1][j] == '.' || mapa->game_mat[i + 1][j] == 'o')
@@ -82,34 +101,10 @@ void gravity(t_map *mapa, t_rockford *rockford, int *done)
                     else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
                         *done = 1;
                 }
-                if (mapa->game_mat[i][j] == '3') {
-                    if (mapa->game_mat[i + 1][j] == ' ')
-                    {
-                        mapa->game_mat[i + 1][j] = '1';
-                        mapa->game_mat[i][j] = ' ';
-                    } else if (mapa->game_mat[i + 1][j] == 'o')
-                    {
-                        if (mapa->game_mat[i][j + 1] == ' ')
-                        {
-                            mapa->game_mat[i][j] = ' ';
-                            mapa->game_mat[i][j + 1] = 'o';
-                        } else if (mapa->game_mat[i][j - 1] == ' ')
-                        {
-                            mapa->game_mat[i][j] = ' ';
-                            mapa->game_mat[i][j - 1] = 'o';
-                        }
-                    }
-                }
-                if (mapa->game_mat[i][j] == 'o' && mapa->game_mat[i + 1][j] == 'o') {
-                    if (mapa->game_mat[i][j + 1] == ' ' && mapa->game_mat[i + 1][j + 1] == ' ')
-                    {
-                        mapa->game_mat[i][j] = ' ';
-                        mapa->game_mat[i][j + 1] = 'o';
-                    } else if (mapa->game_mat[i][j - 1] == ' ' && mapa->game_mat[i + 1][j - 1] == ' ')
-                    {
-                        mapa->game_mat[i][j] = ' ';
-                        mapa->game_mat[i][j - 1] = 'o';
-                    }
+                if (mapa->game_mat[i][j] == '3' && mapa->game_mat[i + 1][j] == ' ')
+                {
+                    mapa->game_mat[i + 1][j] = '1';
+                    mapa->game_mat[i][j] = ' ';
                 }
             }
         }
