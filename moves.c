@@ -63,7 +63,7 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done)
     return;
 }
 
-void gravity(t_map *mapa, t_rockford *rockford, int *done)
+void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *done)
 {
     int i, j;
 
@@ -73,37 +73,37 @@ void gravity(t_map *mapa, t_rockford *rockford, int *done)
         {
             if (mapa->game_mat[i][j] != '#')
             {
-                if (mapa->game_mat[i][j] == 'o')
+                if (mapa->game_mat[i][j] == element)
                 {
                     if (mapa->game_mat[i + 1][j] == ' ')
-                        mapa->game_mat[i][j] = '0';
+                        mapa->game_mat[i][j] = base;
                     else if (mapa->game_mat[i + 1][j] == 'o')
                     {
                         if (mapa->game_mat[i][j + 1] == ' ' && mapa->game_mat[i + 1][j + 1] == ' ')
                         {
                             mapa->game_mat[i][j] = ' ';
-                            mapa->game_mat[i][j + 1] = 'o';
+                            mapa->game_mat[i][j + 1] = element;
                         }
                         else if (mapa->game_mat[i][j - 1] == ' ' && mapa->game_mat[i + 1][j - 1] == ' ')
                         {
                             mapa->game_mat[i][j] = ' ';
-                            mapa->game_mat[i][j - 1] = 'o';
+                            mapa->game_mat[i][j - 1] = element;
                         }
                     }
                 }
 
-                if (mapa->game_mat[i][j] >= '0' && mapa->game_mat[i][j] < '3')
+                if (mapa->game_mat[i][j] >= base && mapa->game_mat[i][j] < base+3)
                 { // caindo
                     if (mapa->game_mat[i + 1][j] == ' ')
                         mapa->game_mat[i][j]++;
                     else if (mapa->game_mat[i + 1][j] == '.' || mapa->game_mat[i + 1][j] == 'o')
-                        mapa->game_mat[i][j] = 'o';
+                        mapa->game_mat[i][j] = element;
                     else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
                         *done = 1;
                 }
-                if (mapa->game_mat[i][j] == '3' && mapa->game_mat[i + 1][j] == ' ')
+                if (mapa->game_mat[i][j] == (base + 3) && mapa->game_mat[i + 1][j] == ' ')
                 {
-                    mapa->game_mat[i + 1][j] = '1';
+                    mapa->game_mat[i + 1][j] = (base + 1);
                     mapa->game_mat[i][j] = ' ';
                 }
             }

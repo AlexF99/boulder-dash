@@ -131,7 +131,8 @@ int main()
                 for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                     key[i] &= KEY_SEEN;
                 
-                gravity(mapa, rockford, &done);
+                gravity('o', '0', mapa, rockford, &done);
+                gravity('*', '5', mapa, rockford, &done);
             }
 
         

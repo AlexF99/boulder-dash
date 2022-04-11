@@ -26,9 +26,9 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
 
     default:
         if (key >= '0' && key <= '3')
-        {
             return assets[5];
-        }
+        else if (key >= '5' && key <= '8')
+            return assets[6];
         
     }
 
