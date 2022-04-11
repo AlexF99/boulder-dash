@@ -32,7 +32,7 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
     nivel_txt = fopen(nome_arquivo, "r");
     if (!nivel_txt)
     {
-        fprintf(stderr, "erro ao abrir arquivo");
+        fprintf(stderr, "erro ao abrir arquivo %s\n", nome_arquivo);
         exit(1);
     }
 

@@ -77,7 +77,7 @@ void gravity(t_map *mapa, t_rockford *rockford, int *done)
                     mapa->game_mat[i][j]++;
                 else if (mapa->game_mat[i + 1][j] == '.')
                     mapa->game_mat[i][j] = 'o';
-                else if (mapa->game_mat[i + 1][j] == '@')
+                else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
                     *done = 1;
             }
 

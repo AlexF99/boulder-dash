@@ -27,11 +27,13 @@ int main()
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
+    char level[9] = "mapa1.txt";
+
     ALLEGRO_BITMAP **assets;
 
     assets = malloc(8 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel("mapa1.txt", &rockford);
+    mapa = le_nivel(level, &rockford);
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -99,18 +101,31 @@ int main()
             {
                 if (key[ALLEGRO_KEY_UP])
                     move_rockford(mapa, rockford, 'u', &done);
-                if (key[ALLEGRO_KEY_DOWN])
+                else if (key[ALLEGRO_KEY_DOWN])
                     move_rockford(mapa, rockford, 'd', &done);
-                if (key[ALLEGRO_KEY_LEFT])
+                else if (key[ALLEGRO_KEY_LEFT])
                     move_rockford(mapa, rockford, 'l', &done);
-                if (key[ALLEGRO_KEY_RIGHT])
+                else if (key[ALLEGRO_KEY_RIGHT])
                     move_rockford(mapa, rockford, 'r', &done);
+                else if (key[ALLEGRO_KEY_PGUP]) {
+                    if (level[4] > '1')
+                    {
+                        level[4]--;
+                        mapa = le_nivel(level, &rockford);
+                    }
+                }
+                else if (key[ALLEGRO_KEY_PGDN]) {
+                    if (level[4] < '2') {
+                        level[4]++;
+                        mapa = le_nivel(level, &rockford);
+                    }
+                } else if (key[ALLEGRO_KEY_ESCAPE])
+                    done = 1;
 
                 if (mapa->diamonds == rockford->diamonds)
                     mapa->door = 1;
 
-                if (key[ALLEGRO_KEY_ESCAPE])
-                    done = 1;
+                
 
                 for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                     key[i] &= KEY_SEEN;
