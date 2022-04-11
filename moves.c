@@ -69,21 +69,48 @@ void gravity(t_map *mapa, t_rockford *rockford, int *done)
 
     for (i = 0; i < mapa->linhas; i++) {
         for (j = 0; j < mapa->colunas; j++) {
-            if (mapa->game_mat[i][j] == 'o' && mapa->game_mat[i + 1][j] == ' ')
-                mapa->game_mat[i][j] = '0';
+            if (mapa->game_mat[i][j] != '#')
+            {
+                if (mapa->game_mat[i][j] == 'o' && mapa->game_mat[i + 1][j] == ' ')
+                    mapa->game_mat[i][j] = '0';
 
-            if (mapa->game_mat[i][j] >= '0' && mapa->game_mat[i][j] < '3') { // caindo
-                if (mapa->game_mat[i + 1][j] == ' ')
-                    mapa->game_mat[i][j]++;
-                else if (mapa->game_mat[i + 1][j] == '.')
-                    mapa->game_mat[i][j] = 'o';
-                else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
-                    *done = 1;
-            }
-
-            if (mapa->game_mat[i][j] == '3' && mapa->game_mat[i + 1][j] == ' ') {
-                mapa->game_mat[i + 1][j] = '1';
-                mapa->game_mat[i][j] = ' ';
+                if (mapa->game_mat[i][j] >= '0' && mapa->game_mat[i][j] < '3') { // caindo
+                    if (mapa->game_mat[i + 1][j] == ' ')
+                        mapa->game_mat[i][j]++;
+                    else if (mapa->game_mat[i + 1][j] == '.' || mapa->game_mat[i + 1][j] == 'o')
+                        mapa->game_mat[i][j] = 'o';
+                    else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
+                        *done = 1;
+                }
+                if (mapa->game_mat[i][j] == '3') {
+                    if (mapa->game_mat[i + 1][j] == ' ')
+                    {
+                        mapa->game_mat[i + 1][j] = '1';
+                        mapa->game_mat[i][j] = ' ';
+                    } else if (mapa->game_mat[i + 1][j] == 'o')
+                    {
+                        if (mapa->game_mat[i][j + 1] == ' ')
+                        {
+                            mapa->game_mat[i][j] = ' ';
+                            mapa->game_mat[i][j + 1] = 'o';
+                        } else if (mapa->game_mat[i][j - 1] == ' ')
+                        {
+                            mapa->game_mat[i][j] = ' ';
+                            mapa->game_mat[i][j - 1] = 'o';
+                        }
+                    }
+                }
+                if (mapa->game_mat[i][j] == 'o' && mapa->game_mat[i + 1][j] == 'o') {
+                    if (mapa->game_mat[i][j + 1] == ' ' && mapa->game_mat[i + 1][j + 1] == ' ')
+                    {
+                        mapa->game_mat[i][j] = ' ';
+                        mapa->game_mat[i][j + 1] = 'o';
+                    } else if (mapa->game_mat[i][j - 1] == ' ' && mapa->game_mat[i + 1][j - 1] == ' ')
+                    {
+                        mapa->game_mat[i][j] = ' ';
+                        mapa->game_mat[i][j - 1] = 'o';
+                    }
+                }
             }
         }
     }

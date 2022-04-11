@@ -10,6 +10,9 @@
 #include "render.h"
 #include "moves.h"
 
+#define KEY_SEEN 1
+#define KEY_RELEASED 2
+
 void must_init(bool test, const char *description)
 {
     if (test)
@@ -33,7 +36,7 @@ int main()
 
     assets = malloc(8 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel(level, &rockford);
+    mapa = le_nivel("mapa1.txt", &rockford);
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -81,8 +84,6 @@ int main()
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-#define KEY_SEEN 1
-#define KEY_RELEASED 2
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
