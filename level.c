@@ -44,7 +44,7 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
     (*rockford)->diamonds = 0;
     (*rockford)->points = 0;
 
-    fscanf(nivel_txt, "%d %d\n%d %d\n", &mapa->linhas, &mapa->colunas, &mapa->diamonds, &mapa->points_per_diamond);
+    fscanf(nivel_txt, "%d %d\n%d %d\n%d\n", &mapa->linhas, &mapa->colunas, &mapa->diamonds, &mapa->points_per_diamond, &mapa->time_left);
 
     mapa->game_mat = aloca_matriz(mapa->linhas, mapa->colunas);
 

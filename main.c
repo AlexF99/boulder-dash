@@ -47,6 +47,9 @@ int main()
     ALLEGRO_TIMER *tick = al_create_timer(1.0 / 10.0);
     must_init(tick, "tick");
 
+    ALLEGRO_TIMER *time_limit = al_create_timer(1.0 / 1.0);
+    must_init(time_limit, "time_limit");
+
     ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
     must_init(queue, "queue");
 
@@ -80,16 +83,17 @@ int main()
     al_register_event_source(queue, al_get_display_event_source(disp));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_timer_event_source(tick));
+    al_register_event_source(queue, al_get_timer_event_source(time_limit));
 
     bool redraw = true;
     ALLEGRO_EVENT event;
-
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
 
     al_start_timer(timer);
     al_start_timer(tick);
+    al_start_timer(time_limit);
 
     while (1)
     {
@@ -98,6 +102,14 @@ int main()
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
+            if (event.timer.source == time_limit)
+            {
+                if (mapa->time_left > 0)
+                    mapa->time_left--;
+                else
+                    done = 1;
+            }
+
             if (event.timer.source == tick)
             {
                 if (key[ALLEGRO_KEY_UP])
@@ -108,34 +120,35 @@ int main()
                     move_rockford(mapa, rockford, 'l', &done);
                 else if (key[ALLEGRO_KEY_RIGHT])
                     move_rockford(mapa, rockford, 'r', &done);
-                else if (key[ALLEGRO_KEY_PGUP]) {
+                else if (key[ALLEGRO_KEY_PGUP])
+                {
                     if (level[4] > '1')
                     {
                         level[4]--;
                         mapa = le_nivel(level, &rockford);
                     }
                 }
-                else if (key[ALLEGRO_KEY_PGDN]) {
-                    if (level[4] < '2') {
+                else if (key[ALLEGRO_KEY_PGDN])
+                {
+                    if (level[4] < '2')
+                    {
                         level[4]++;
                         mapa = le_nivel(level, &rockford);
                     }
-                } else if (key[ALLEGRO_KEY_ESCAPE])
+                }
+                else if (key[ALLEGRO_KEY_ESCAPE])
                     done = 1;
 
                 if (mapa->diamonds == rockford->diamonds)
                     mapa->door = 1;
 
-                
-
                 for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                     key[i] &= KEY_SEEN;
-                
+
                 gravity('o', '0', mapa, rockford, &done);
                 gravity('*', '5', mapa, rockford, &done);
             }
 
-        
             redraw = true;
             break;
 

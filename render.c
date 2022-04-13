@@ -52,6 +52,10 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
     char* points_per_diamond = malloc( length + 1 );
     snprintf( points_per_diamond, length + 1, "%d", mapa->points_per_diamond);
     
+    length = snprintf( NULL, 0, "%d", mapa->time_left);
+    char* time_left = malloc( length + 1 );
+    snprintf( time_left, length + 1, "%d", mapa->time_left);
+    
     length = snprintf( NULL, 0, "%d", rockford->points);
     char* points = malloc( length + 1 );
     snprintf( points, length + 1, "%d", rockford->points);
@@ -67,6 +71,8 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
     
     al_draw_text(font, al_map_rgb(255, 255, 255), 300, 5, 0, "points: ");
     al_draw_text(font, al_map_rgb(255, 255, 255), 360, 5, 0, points);
+    
+    al_draw_text(font, al_map_rgb(255, 255, 255), 560, 5, 0, time_left);
 
 
     for (int i = 0; i < mapa->linhas; i++)
