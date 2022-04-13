@@ -13,8 +13,10 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
     {
     case '@': // rockford
         return assets[0];
-    case '#': // wall
+    case '-': // wall
         return assets[1];
+    case '#': // steel wall
+        return assets[3];
     case '.': // dirt
         return assets[4];
     case 'o': // boulder
@@ -86,5 +88,8 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
     }
     free(diamonds);
     free(diamonds_to_open);
+    free(points_per_diamond);
+    free(points);
+    free(time_left);
     al_flip_display();
 }
