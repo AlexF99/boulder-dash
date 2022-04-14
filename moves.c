@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "rockford.h"
 #include "map.h"
 
@@ -76,6 +78,16 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done)
         }
     }
     mapa->game_mat[rockford->y][rockford->x] = '@';
+
+    system("clear");
+    for (int i = 0; i < mapa->linhas; i++)
+    {
+        for (int j = 0; j < mapa->colunas; j++)
+        {
+            printf("%c", mapa->game_mat[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *done)
@@ -115,6 +127,7 @@ void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *do
                              mapa->game_mat[i + 1][j] == 'o' ||
                              mapa->game_mat[i + 1][j] == '-' ||
                              mapa->game_mat[i + 1][j] == '#' ||
+                             mapa->game_mat[i + 1][j] == 's' ||
                              mapa->game_mat[i + 1][j] == '*')
                         mapa->game_mat[i][j] = element;
                     else if (mapa->game_mat[i + 1][j] == '@') // rockford dies

@@ -30,13 +30,13 @@ int main()
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
-    char level[9] = "mapa1.txt";
+    char level[19] = "./levels/mapa1.txt";
 
     ALLEGRO_BITMAP **assets;
 
     assets = malloc(8 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel("mapa1.txt", &rockford);
+    mapa = le_nivel("./levels/mapa1.txt", &rockford);
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -122,17 +122,17 @@ int main()
                     move_rockford(mapa, rockford, 'r', &done);
                 else if (key[ALLEGRO_KEY_PGUP])
                 {
-                    if (level[4] > '1')
+                    if (level[13] > '1')
                     {
-                        level[4]--;
+                        level[13]--;
                         mapa = le_nivel(level, &rockford);
                     }
                 }
                 else if (key[ALLEGRO_KEY_PGDN])
                 {
-                    if (level[4] < '2')
+                    if (level[13] < '2')
                     {
-                        level[4]++;
+                        level[13]++;
                         mapa = le_nivel(level, &rockford);
                     }
                 }
