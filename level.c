@@ -22,7 +22,7 @@ char **aloca_matriz(int linhas, int colunas)
     return mat;
 }
 
-t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
+t_map *le_nivel(char *nome_arquivo, t_rockford **rockford, int next_level)
 {
     t_map *mapa = NULL;
     FILE *nivel_txt = NULL;
@@ -42,7 +42,8 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford)
     *rockford = malloc(sizeof(t_rockford));
     (*rockford)->alive = 1;
     (*rockford)->diamonds = 0;
-    (*rockford)->points = 0;
+    if (!next_level)
+        (*rockford)->points = 0;
 
     fscanf(nivel_txt, "%d %d\n%d %d\n%d\n", &mapa->linhas, &mapa->colunas, &mapa->diamonds, &mapa->points_per_diamond, &mapa->time_left);
 

@@ -3,7 +3,7 @@
 #include "rockford.h"
 #include "map.h"
 
-void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done)
+void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done, int *next_level)
 {
     char destino;
 
@@ -32,7 +32,7 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done)
         if (destino == 's')
         {
             if (mapa->door)
-                *done = 1;
+                *next_level = 1;
         }
         else
         {

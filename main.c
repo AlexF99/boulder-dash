@@ -28,6 +28,7 @@ int main()
     int d_height = 800;
     int d_width = 480;
     int done = 0;
+    int next_level = 0;
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
@@ -37,7 +38,7 @@ int main()
 
     assets = malloc(8 * sizeof(ALLEGRO_BITMAP *));
 
-    mapa = le_nivel("./levels/mapa1.txt", &rockford);
+    mapa = le_nivel("./levels/mapa1.txt", &rockford, next_level);
 
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
@@ -114,19 +115,19 @@ int main()
             if (event.timer.source == tick)
             {
                 if (key[ALLEGRO_KEY_UP])
-                    move_rockford(mapa, rockford, 'u', &done);
+                    move_rockford(mapa, rockford, 'u', &done, &next_level);
                 else if (key[ALLEGRO_KEY_DOWN])
-                    move_rockford(mapa, rockford, 'd', &done);
+                    move_rockford(mapa, rockford, 'd', &done, &next_level);
                 else if (key[ALLEGRO_KEY_LEFT])
-                    move_rockford(mapa, rockford, 'l', &done);
+                    move_rockford(mapa, rockford, 'l', &done, &next_level);
                 else if (key[ALLEGRO_KEY_RIGHT])
-                    move_rockford(mapa, rockford, 'r', &done);
+                    move_rockford(mapa, rockford, 'r', &done, &next_level);
                 else if (key[ALLEGRO_KEY_PGUP])
                 {
                     if (level[13] > '1')
                     {
                         level[13]--;
-                        mapa = le_nivel(level, &rockford);
+                        mapa = le_nivel(level, &rockford, next_level);
                     }
                 }
                 else if (key[ALLEGRO_KEY_PGDN])
@@ -134,7 +135,7 @@ int main()
                     if (level[13] < '2')
                     {
                         level[13]++;
-                        mapa = le_nivel(level, &rockford);
+                        mapa = le_nivel(level, &rockford, next_level);
                     }
                 }
                 else if (key[ALLEGRO_KEY_ESCAPE])
@@ -164,6 +165,19 @@ int main()
             done = 1;
             break;
         }
+
+        if (next_level) {
+            if (level[13] < '2')
+            {
+                level[13]++;
+                mapa = le_nivel(level, &rockford, next_level);
+                next_level = 0;
+            } else {
+                // zerou o jogo
+                done = 1;
+            }
+        }
+
         if (done) {
             save_records("rockford", rockford->points);
             break;
