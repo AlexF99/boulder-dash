@@ -179,7 +179,7 @@ int main()
         }
 
         if (done) {
-            save_records("rockford", rockford->points);
+            save_records(rockford->points);
             break;
         }
 

@@ -5,10 +5,11 @@
 #include "records.h"
 #define max_records 10
 
-t_record **get_records_array()
+int *get_records_array()
 {
     int i = 0;
-    t_record **records = NULL;
+    int j = 0;
+    int *records = NULL;
     char title[9];
     FILE *records_file = fopen("records.txt", "r");
 
@@ -18,34 +19,25 @@ t_record **get_records_array()
         fprintf(records_file, "records:\n");
     }
 
-    // alloca array de records
-    records = malloc(max_records * sizeof(t_record *));
-    for (i = 0; i < max_records; i++)
-    {
-        records[i] = (t_record *)calloc(max_records, sizeof(t_record));
-        strcpy(records[i]->username, "xxx");
-    }
+    records = calloc(max_records, sizeof(int));
 
-    i = 0;
     fscanf(records_file, "%s\n", title);
 
     while (i < max_records && !feof(records_file))
     {
-        fscanf(records_file, "%s\t%d\n", records[i]->username, &records[i]->points);
+        fscanf(records_file, "%d:\t%d\n", &j, &records[i]);
         i++;
     }
 
     fclose(records_file);
-
     return records;
 }
 
-void save_records(char *username, int points)
+void save_records(int points)
 {
     int i, j;
-    t_record **records = get_records_array();
-    t_record **records_copy;
-    t_record *new_record;
+    int *records = get_records_array();
+    int *records_copy;
     FILE *records_file = fopen("records.txt", "r+");
 
     if (!records_file || records_file == NULL)
@@ -54,50 +46,25 @@ void save_records(char *username, int points)
         return;
     }
 
-    // alloca array de records
-    records_copy = malloc(max_records * sizeof(t_record *));
+    records_copy = calloc(max_records, sizeof(int));
     for (i = 0; i < max_records; i++)
-    {
-        records_copy[i] = (t_record *)calloc(max_records, sizeof(t_record));
-        records_copy[i]->points = records[i]->points;
-        strcpy(records_copy[i]->username, records[i]->username);
-    }
-
-    new_record = malloc(sizeof(t_record));
-
-    new_record->points = points;
-    strcpy(new_record->username, username);
+        records_copy[i] = records[i];
 
     for (i = 0; i < max_records; i++)
     {
-        if (records[i] && records[i] != NULL && new_record->points > records[i]->points)
+        if (points > records[i])
         {
             for (j = i; j < max_records - 1; j++)
-            {
-                if (strlen(records[j + 1]->username) > 0)
-                {
-                    strcpy(records[j + 1]->username, records_copy[j]->username);
-                    records[j + 1] = records_copy[j];
-                }
-            }
-            records[i] = new_record;
+                records[j + 1] = records_copy[j];
+            records[i] = points;
             break;
         }
     }
 
     fprintf(records_file, "records:\n");
-    for (int i = 0; i < max_records; i++)
-        if (records[i] && records[i] != NULL)
-            fprintf(records_file, "%s\t%d\n", records[i]->username, records[i]->points);
+    for (i = 0; i < max_records; i++)
+        fprintf(records_file, "%d:\t%d\n", i + 1, records[i]);
 
-    // free_records_array(records);
-    // free_records_array(records_copy);
-}
-
-void free_records_array(t_record **records_array)
-{
-    for (int i = 0; i < max_records; i++)
-        free(records_array[i]);
-
-    free(records_array);
+    free(records);
+    free(records_copy);
 }
