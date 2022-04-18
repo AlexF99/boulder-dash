@@ -9,6 +9,7 @@
 #include "level.h"
 #include "render.h"
 #include "moves.h"
+#include "records.h"
 
 #define KEY_SEEN 1
 #define KEY_RELEASED 2
@@ -163,8 +164,10 @@ int main()
             done = 1;
             break;
         }
-        if (done)
+        if (done) {
+            save_records("rockford", rockford->points);
             break;
+        }
 
         if (redraw && al_is_event_queue_empty(queue))
         {
