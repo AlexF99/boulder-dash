@@ -79,15 +79,15 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done,
     }
     mapa->game_mat[rockford->y][rockford->x] = '@';
 
-    system("clear");
-    for (int i = 0; i < mapa->linhas; i++)
-    {
-        for (int j = 0; j < mapa->colunas; j++)
-        {
-            printf("%c", mapa->game_mat[i][j]);
-        }
-        printf("\n");
-    }
+    // system("clear");
+    // for (int i = 0; i < mapa->linhas; i++)
+    // {
+    //     for (int j = 0; j < mapa->colunas; j++)
+    //     {
+    //         printf("%c", mapa->game_mat[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 }
 
 void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *done)
