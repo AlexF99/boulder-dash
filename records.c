@@ -21,7 +21,10 @@ t_record **get_records_array()
     // alloca array de records
     records = malloc(max_records * sizeof(t_record *));
     for (i = 0; i < max_records; i++)
+    {
         records[i] = (t_record *)calloc(max_records, sizeof(t_record));
+        strcpy(records[i]->username, "xxx");
+    }
 
     i = 0;
     fscanf(records_file, "%s\n", title);
@@ -41,6 +44,7 @@ void save_records(char *username, int points)
 {
     int i, j;
     t_record **records = get_records_array();
+    t_record **records_copy;
     t_record *new_record;
     FILE *records_file = fopen("records.txt", "r+");
 
@@ -48,6 +52,15 @@ void save_records(char *username, int points)
     {
         fprintf(stderr, "erro ao abrir arquivo de pontuacao\n");
         return;
+    }
+
+    // alloca array de records
+    records_copy = malloc(max_records * sizeof(t_record *));
+    for (i = 0; i < max_records; i++)
+    {
+        records_copy[i] = (t_record *)calloc(max_records, sizeof(t_record));
+        records_copy[i]->points = records[i]->points;
+        strcpy(records_copy[i]->username, records[i]->username);
     }
 
     new_record = malloc(sizeof(t_record));
@@ -59,9 +72,13 @@ void save_records(char *username, int points)
     {
         if (records[i] && records[i] != NULL && new_record->points > records[i]->points)
         {
-            for (j = i; j < max_records - 1; j++) {
-                if (strlen(records[j+1]->username) > 0)
-                    records[j + 1] = records[j];
+            for (j = i; j < max_records - 1; j++)
+            {
+                if (strlen(records[j + 1]->username) > 0)
+                {
+                    strcpy(records[j + 1]->username, records_copy[j]->username);
+                    records[j + 1] = records_copy[j];
+                }
             }
             records[i] = new_record;
             break;
@@ -70,10 +87,17 @@ void save_records(char *username, int points)
 
     fprintf(records_file, "records:\n");
     for (int i = 0; i < max_records; i++)
-    {
         if (records[i] && records[i] != NULL)
-        {
             fprintf(records_file, "%s\t%d\n", records[i]->username, records[i]->points);
-        }
-    }
+
+    // free_records_array(records);
+    // free_records_array(records_copy);
+}
+
+void free_records_array(t_record **records_array)
+{
+    for (int i = 0; i < max_records; i++)
+        free(records_array[i]);
+
+    free(records_array);
 }

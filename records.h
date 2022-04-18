@@ -12,4 +12,6 @@ t_record **get_records_array();
 
 void save_records(char *username, int points);
 
+void free_records_array(t_record **records_array);
+
 #endif
