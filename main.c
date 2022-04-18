@@ -36,7 +36,7 @@ int main()
 
     ALLEGRO_BITMAP **assets;
 
-    assets = malloc(8 * sizeof(ALLEGRO_BITMAP *));
+    assets = malloc(9 * sizeof(ALLEGRO_BITMAP *));
 
     mapa = le_nivel("./levels/mapa1.txt", &rockford, next_level);
 
@@ -78,8 +78,10 @@ int main()
     must_init(assets[5], "boulder");
     assets[6] = al_load_bitmap("./assets/diamond.png");
     must_init(assets[6], "diamond");
-    assets[7] = al_load_bitmap("./assets/exit.png");
-    must_init(assets[7], "exit");
+    assets[7] = al_load_bitmap("./assets/firefly.png");
+    must_init(assets[7], "firefly");
+    assets[8] = al_load_bitmap("./assets/exit.png");
+    must_init(assets[8], "exit");
 
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(disp));
@@ -188,11 +190,19 @@ int main()
             render(mapa, assets, rockford, font);
             redraw = false;
         }
+
+        if (!rockford->alive)
+        {
+            // show game over message
+            // show game leaderboard
+            sleep(1);
+            done = 1;
+        }
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 9; i++)
         al_destroy_bitmap(assets[i]);
-
+    free(assets);
     al_destroy_font(font);
     al_destroy_display(disp);
     al_destroy_timer(timer);

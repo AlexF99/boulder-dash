@@ -131,7 +131,18 @@ void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *do
                              mapa->game_mat[i + 1][j] == '*')
                         mapa->game_mat[i][j] = element;
                     else if (mapa->game_mat[i + 1][j] == '@') // rockford dies
-                        *done = 1;
+                    {
+                        rockford->alive = 0;
+                        mapa->game_mat[rockford->y][rockford->x] = 'x';
+                        mapa->game_mat[rockford->y+1][rockford->x] = 'x';
+                        mapa->game_mat[rockford->y-1][rockford->x] = 'x';
+                        mapa->game_mat[rockford->y][rockford->x+1] = 'x';
+                        mapa->game_mat[rockford->y][rockford->x-1] = 'x';
+                        mapa->game_mat[rockford->y+1][rockford->x+1] = 'x';
+                        mapa->game_mat[rockford->y-1][rockford->x+1] = 'x';
+                        mapa->game_mat[rockford->y+1][rockford->x-1] = 'x';
+                        mapa->game_mat[rockford->y-1][rockford->x-1] = 'x';
+                    }
                 }
                 if (mapa->game_mat[i][j] == (base + 3) && mapa->game_mat[i + 1][j] == ' ')
                 {
