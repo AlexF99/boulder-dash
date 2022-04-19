@@ -2,8 +2,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
-#ifndef _ALLEGRO_VARS_H_
-#define _ALLEGRO_VARS_H_
+#ifndef _GAME_H_
+#define _GAME_H_
 
 #define d_height 800
 #define d_width 480

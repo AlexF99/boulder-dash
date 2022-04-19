@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "allegro_vars.h"
+#include "game.h"
 #include "map.h"
 #include "rockford.h"
 #include "level.h"
