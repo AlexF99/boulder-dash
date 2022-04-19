@@ -83,6 +83,8 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
 
     int done = 0;
     int next_level = 0;
+    bool redraw = true;
+    bool instructions = true;
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
@@ -90,7 +92,6 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
 
     mapa = le_nivel("./levels/mapa1.txt", &rockford, next_level);
     
-    bool redraw = true;
     ALLEGRO_EVENT event;
 
     unsigned char key[ALLEGRO_KEY_MAX];
@@ -117,6 +118,11 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
 
             if (event.timer.source == allegro_vars->tick)
             {
+                if (key[ALLEGRO_KEY_H] || key[ALLEGRO_KEY_F1])
+                    instructions = true;
+                else 
+                    instructions = false;
+
                 if (key[ALLEGRO_KEY_UP])
                     move_rockford(mapa, rockford, 'u', &done, &next_level);
                 else if (key[ALLEGRO_KEY_DOWN])
@@ -188,7 +194,7 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
 
         if (redraw && al_is_event_queue_empty(allegro_vars->queue))
         {
-            render(mapa, allegro_vars->assets, rockford, allegro_vars->font);
+            render(mapa, allegro_vars->assets, rockford, allegro_vars->font, instructions);
             redraw = false;
         }
 
