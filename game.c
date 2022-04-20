@@ -84,7 +84,7 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
     int done = 0;
     int next_level = 0;
     bool redraw = true;
-    bool instructions = true;
+    bool instructions = false;
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
@@ -119,9 +119,7 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
             if (event.timer.source == allegro_vars->tick)
             {
                 if (key[ALLEGRO_KEY_H] || key[ALLEGRO_KEY_F1])
-                    instructions = true;
-                else 
-                    instructions = false;
+                    instructions = !instructions;
 
                 if (key[ALLEGRO_KEY_UP])
                     move_rockford(mapa, rockford, 'u', &done, &next_level);
