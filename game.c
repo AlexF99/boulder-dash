@@ -92,7 +92,7 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
     char level[19] = "./levels/mapa0.txt";
 
-    mapa = le_nivel("./levels/mapa0.txt", &rockford, next_level);
+    mapa = le_nivel(level, &rockford, next_level);
 
     ALLEGRO_EVENT event;
 

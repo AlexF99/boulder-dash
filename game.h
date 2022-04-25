@@ -5,8 +5,8 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#define d_height 800
-#define d_width 480
+#define d_height 1280
+#define d_width 720
 
 typedef struct t_allegro_vars {
     ALLEGRO_TIMER *timer;

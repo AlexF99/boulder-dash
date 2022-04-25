@@ -105,7 +105,7 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
             {
                 asset = get_asset(assets, mapa->game_mat[i][j]);
                 if (asset)
-                    al_draw_bitmap(get_asset(assets, mapa->game_mat[i][j]), j * 16, (i * 16) + 16, 0);
+                    al_draw_scaled_bitmap(get_asset(assets, mapa->game_mat[i][j]), 0, 0, 16, 16, j * 32, (i * 31.3) + 32, 32, 32, 0);
             }
         }
         free(diamonds);
