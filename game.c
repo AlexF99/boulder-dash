@@ -141,7 +141,7 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                 }
                 else if (key[ALLEGRO_KEY_PGDN])
                 {
-                    if (level[13] < '2')
+                    if (level[13] < '9')
                     {
                         level[13]++;
                         mapa = le_nivel(level, &rockford, next_level);
@@ -177,7 +177,7 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
         if (next_level)
         {
-            if (level[13] < '2')
+            if (level[13] < '9')
             {
                 level[13]++;
                 mapa = le_nivel(level, &rockford, next_level);
