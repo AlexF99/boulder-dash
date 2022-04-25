@@ -6,15 +6,15 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 
-void show_instructions(ALLEGRO_FONT* font) {
+void show_txt(ALLEGRO_FONT* font, char *file_name) {
     int i = 5;
     char str[1024];
-    FILE *instructions_file = fopen("instructions.txt", "r");
+    FILE *txt_file = fopen(file_name, "r");
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    while (!feof(instructions_file))
+    while (!feof(txt_file))
     {
-        fgets(str, 1024, instructions_file);
+        fgets(str, 1024, txt_file);
         al_draw_text(font, al_map_rgb(255, 255, 255), 100, i, 0, str);
         i += 15;
     }
@@ -53,10 +53,12 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
     return NULL;
 }
 
-void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_FONT* font, bool instructions)
+void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_FONT* font, bool instructions, bool leaderboard)
 {
     if (instructions) {
-        show_instructions(font);
+        show_txt(font, "instructions.txt");
+    } else if (leaderboard) {
+        show_txt(font, "records.txt");
     } else {
 
         int i, j;

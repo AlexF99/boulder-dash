@@ -20,8 +20,9 @@ void must_init(bool test, const char *description)
     exit(1);
 }
 
-t_allegro_vars *vars_init() {
-    
+t_allegro_vars *vars_init()
+{
+
     t_allegro_vars *allegro_vars = malloc(sizeof(t_allegro_vars));
 
     must_init(al_init(), "allegro");
@@ -46,8 +47,7 @@ t_allegro_vars *vars_init() {
     must_init(allegro_vars->font, "font");
 
     must_init(al_init_image_addon(), "image addon");
-    
-    
+
     // carrega assets
     allegro_vars->assets = malloc(9 * sizeof(ALLEGRO_BITMAP *));
 
@@ -79,19 +79,21 @@ t_allegro_vars *vars_init() {
     return allegro_vars;
 }
 
-void game_main_loop(t_allegro_vars *allegro_vars) {
+void game_main_loop(t_allegro_vars *allegro_vars)
+{
 
     int done = 0;
     int next_level = 0;
     bool redraw = true;
     bool instructions = false;
+    bool leaderboard = false;
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
     char level[19] = "./levels/mapa1.txt";
 
     mapa = le_nivel("./levels/mapa1.txt", &rockford, next_level);
-    
+
     ALLEGRO_EVENT event;
 
     unsigned char key[ALLEGRO_KEY_MAX];
@@ -113,7 +115,7 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
                 if (mapa->time_left > 0)
                     mapa->time_left--;
                 else
-                    done = 1;
+                    rockford->alive = 0;
             }
 
             if (event.timer.source == allegro_vars->tick)
@@ -173,40 +175,41 @@ void game_main_loop(t_allegro_vars *allegro_vars) {
             break;
         }
 
-        if (next_level) {
+        if (next_level)
+        {
             if (level[13] < '2')
             {
                 level[13]++;
                 mapa = le_nivel(level, &rockford, next_level);
                 next_level = 0;
-            } else {
+            }
+            else
+            {
                 // zerou o jogo
-                done = 1;
+                save_records(rockford->points);
+                leaderboard = true;
             }
         }
 
-        if (done) {
-            save_records(rockford->points);
+        if (done)
             break;
+
+        if (!rockford->alive)
+        {
+            save_records(rockford->points);
+            leaderboard = true;
         }
 
         if (redraw && al_is_event_queue_empty(allegro_vars->queue))
         {
-            render(mapa, allegro_vars->assets, rockford, allegro_vars->font, instructions);
+            render(mapa, allegro_vars->assets, rockford, allegro_vars->font, instructions, leaderboard);
             redraw = false;
-        }
-
-        if (!rockford->alive)
-        {
-            // show game over message
-            // show game leaderboard
-            sleep(1);
-            done = 1;
         }
     }
 }
 
-void vars_destroy(t_allegro_vars *allegro_vars) {
+void vars_destroy(t_allegro_vars *allegro_vars)
+{
     for (int i = 0; i < 9; i++)
         al_destroy_bitmap(allegro_vars->assets[i]);
     free(allegro_vars->assets);

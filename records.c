@@ -65,6 +65,7 @@ void save_records(int points)
     for (i = 0; i < max_records; i++)
         fprintf(records_file, "%d:\t%d\n", i + 1, records[i]);
 
+    fclose(records_file);
     free(records);
     free(records_copy);
 }
