@@ -90,9 +90,9 @@ void game_main_loop(t_allegro_vars *allegro_vars)
     t_rockford *rockford = NULL;
     t_map *mapa = NULL;
 
-    char level[19] = "./levels/mapa1.txt";
+    char level[19] = "./levels/mapa0.txt";
 
-    mapa = le_nivel("./levels/mapa1.txt", &rockford, next_level);
+    mapa = le_nivel("./levels/mapa0.txt", &rockford, next_level);
 
     ALLEGRO_EVENT event;
 
@@ -133,7 +133,7 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                     move_rockford(mapa, rockford, 'r', &done, &next_level);
                 else if (key[ALLEGRO_KEY_PGUP])
                 {
-                    if (level[13] > '1')
+                    if (level[13] > '0')
                     {
                         level[13]--;
                         mapa = le_nivel(level, &rockford, next_level);
