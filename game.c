@@ -85,6 +85,7 @@ void game_main_loop(t_allegro_vars *allegro_vars)
     int done = 0;
     int next_level = 0;
     bool redraw = true;
+    bool game_over = false;
     bool instructions = false;
     bool leaderboard = false;
     t_rockford *rockford = NULL;
@@ -194,10 +195,11 @@ void game_main_loop(t_allegro_vars *allegro_vars)
         if (done)
             break;
 
-        if (!rockford->alive)
+        if (!rockford->alive && !game_over)
         {
             save_records(rockford->points);
             leaderboard = true;
+            game_over = true;
         }
 
         if (redraw && al_is_event_queue_empty(allegro_vars->queue))

@@ -1,4 +1,4 @@
 INSTRUCOES:
-Pegue os diamantes, voce precisa de todos para passar de nivel.
+Pegue os diamantes, cada nivel tem um minimo para passar de nivel.
 Use as setas do teclado para controlar o rockford.
 Use PgUp e PgDn para navegar entre os niveis.

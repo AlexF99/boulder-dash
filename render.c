@@ -15,9 +15,11 @@ void show_txt(ALLEGRO_FONT* font, char *file_name) {
     while (!feof(txt_file))
     {
         fgets(str, 1024, txt_file);
-        al_draw_text(font, al_map_rgb(255, 255, 255), 100, i, 0, str);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 100, i+100, 0, str);
         i += 15;
     }
+
+    fclose(txt_file);
 }
 
 ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
@@ -105,7 +107,7 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
             {
                 asset = get_asset(assets, mapa->game_mat[i][j]);
                 if (asset)
-                    al_draw_scaled_bitmap(get_asset(assets, mapa->game_mat[i][j]), 0, 0, 16, 16, j * 32, (i * 31.3) + 32, 32, 32, 0);
+                    al_draw_scaled_bitmap(asset, 0, 0, 16, 16, j * 32, (i * 31.3) + 32, 32, 32, 0);
             }
         }
         free(diamonds);
