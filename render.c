@@ -88,17 +88,17 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
 
 
         al_clear_to_color(al_map_rgb(0, 0, 0));
-        al_draw_text(font, al_map_rgb(255, 255, 255), 5, 5, 0, diamonds);
-        al_draw_text(font, al_map_rgb(255, 255, 255), 23, 5, 0, "/");
-        al_draw_text(font, al_map_rgb(255, 255, 255), 35, 5, 0, diamonds_to_open);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 5, 12, 0, diamonds);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 23, 12, 0, "/");
+        al_draw_text(font, al_map_rgb(252, 186, 3), 35, 12, 0, diamonds_to_open);
 
-        al_draw_text(font, al_map_rgb(255, 255, 255), 100, 5, 0, "points per diamond: ");
-        al_draw_text(font, al_map_rgb(255, 255, 255), 260, 5, 0, points_per_diamond);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 300, 12, 0, "points per diamond: ");
+        al_draw_text(font, al_map_rgb(255, 255, 255), 460, 12, 0, points_per_diamond);
         
-        al_draw_text(font, al_map_rgb(255, 255, 255), 300, 5, 0, "points: ");
-        al_draw_text(font, al_map_rgb(255, 255, 255), 360, 5, 0, points);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 650, 12, 0, "points: ");
+        al_draw_text(font, al_map_rgb(255, 255, 255), 710, 12, 0, points);
         
-        al_draw_text(font, al_map_rgb(255, 255, 255), 560, 5, 0, time_left);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 1200, 12, 0, time_left);
 
 
         for (int i = 0; i < mapa->linhas; i++)
