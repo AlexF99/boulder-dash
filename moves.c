@@ -78,16 +78,6 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done,
         }
     }
     mapa->game_mat[rockford->y][rockford->x] = '@';
-
-    // system("clear");
-    // for (int i = 0; i < mapa->linhas; i++)
-    // {
-    //     for (int j = 0; j < mapa->colunas; j++)
-    //     {
-    //         printf("%c", mapa->game_mat[i][j]);
-    //     }
-    //     printf("\n");
-    // }
 }
 
 void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *done)
@@ -149,6 +139,21 @@ void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *do
                     mapa->game_mat[i + 1][j] = (base + 1);
                     mapa->game_mat[i][j] = ' ';
                 }
+            }
+        }
+    }
+}
+
+void diamond_easter_egg(t_map *mapa) {
+    int i, j;
+    for (i = 0; i < mapa->linhas; i++)
+    {
+        for (j = 0; j < mapa->colunas; j++)
+        {
+            if (mapa->game_mat[i][j] == 'o')
+            {
+                mapa->game_mat[i][j] = '*';
+                return;
             }
         }
     }

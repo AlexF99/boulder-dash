@@ -81,7 +81,8 @@ t_allegro_vars *vars_init()
 
 void game_main_loop(t_allegro_vars *allegro_vars)
 {
-
+    int time_ee = 0;
+    int diamond_ee = 0;
     int done = 0;
     int next_level = 0;
     bool redraw = true;
@@ -117,6 +118,22 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                     mapa->time_left--;
                 else
                     rockford->alive = 0;
+
+                if (key[ALLEGRO_KEY_T] && time_ee < 5) // easter egg
+                    time_ee++;
+                if (time_ee >= 5)
+                {
+                    mapa->time_left += 20;
+                    time_ee = 0;
+                }
+                if (key[ALLEGRO_KEY_R] && diamond_ee < 5) // easter egg
+                    diamond_ee++;
+                if (diamond_ee >= 5)
+                {
+                    diamond_easter_egg(mapa);
+                    diamond_ee = 0;
+                }
+                
             }
 
             if (event.timer.source == allegro_vars->tick)
