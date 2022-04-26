@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include "rockford.h"
 #include "map.h"
+#include "moves.h"
 
-void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *next_level)
+void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *next_level, ALLEGRO_SAMPLE **sounds)
 {
     char destino;
 
@@ -40,6 +41,7 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *next_
             {
                 rockford->diamonds++;
                 rockford->points += mapa->points_per_diamond;
+                al_play_sample(sounds[0], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             mapa->game_mat[rockford->y][rockford->x] = ' ';
             switch (direction)

@@ -11,6 +11,9 @@
 #define KEY_SEEN 1
 #define KEY_RELEASED 2
 
+#define NUM_ASSETS 9
+#define NUM_SOUNDS 1
+
 void must_init(bool test, const char *description)
 {
     if (test)
@@ -48,8 +51,18 @@ t_allegro_vars *vars_init()
 
     must_init(al_init_image_addon(), "image addon");
 
+    // init sons
+    must_init(al_install_audio(), "audio");
+    must_init(al_init_acodec_addon(), "audio codecs");
+    must_init(al_reserve_samples(16), "reserve samples");
+
+    allegro_vars->sounds = malloc(NUM_SOUNDS * sizeof(ALLEGRO_SAMPLE *));
+
+    allegro_vars->sounds[0] = al_load_sample("./assets/zdirt.wav");
+    must_init(allegro_vars->sounds[0], "zdirt");
+
     // carrega assets
-    allegro_vars->assets = malloc(9 * sizeof(ALLEGRO_BITMAP *));
+    allegro_vars->assets = malloc(NUM_ASSETS * sizeof(ALLEGRO_BITMAP *));
 
     allegro_vars->assets[0] = al_load_bitmap("./assets/rockford.png");
     must_init(allegro_vars->assets[0], "rockford");
@@ -140,13 +153,13 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                 if (rockford->alive)
                 {
                     if (key[ALLEGRO_KEY_UP])
-                        move_rockford(mapa, rockford, 'u', &next_level);
+                        move_rockford(mapa, rockford, 'u', &next_level, allegro_vars->sounds);
                     else if (key[ALLEGRO_KEY_DOWN])
-                        move_rockford(mapa, rockford, 'd', &next_level);
+                        move_rockford(mapa, rockford, 'd', &next_level, allegro_vars->sounds);
                     else if (key[ALLEGRO_KEY_LEFT])
-                        move_rockford(mapa, rockford, 'l', &next_level);
+                        move_rockford(mapa, rockford, 'l', &next_level, allegro_vars->sounds);
                     else if (key[ALLEGRO_KEY_RIGHT])
-                        move_rockford(mapa, rockford, 'r', &next_level);
+                        move_rockford(mapa, rockford, 'r', &next_level, allegro_vars->sounds);
                     else if (key[ALLEGRO_KEY_PGUP])
                     {
                         if (level[13] > '0')
@@ -242,8 +255,12 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
 void vars_destroy(t_allegro_vars *allegro_vars)
 {
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < NUM_ASSETS; i++)
         al_destroy_bitmap(allegro_vars->assets[i]);
+
+    for (int i = 0; i < NUM_SOUNDS; i++)
+        al_destroy_sample(allegro_vars->sounds[i]);
+    
     free(allegro_vars->assets);
     al_destroy_font(allegro_vars->font);
     al_destroy_display(allegro_vars->disp);

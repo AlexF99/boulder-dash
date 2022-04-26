@@ -1,6 +1,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 #ifndef _GAME_H_
 #define _GAME_H_
@@ -18,6 +20,7 @@ typedef struct t_allegro_vars {
     ALLEGRO_FONT *font;
 
     ALLEGRO_BITMAP **assets;
+    ALLEGRO_SAMPLE **sounds;
 } t_allegro_vars;
 
 void must_init(bool test, const char *description);
