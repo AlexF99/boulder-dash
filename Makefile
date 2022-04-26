@@ -11,3 +11,4 @@ clean:
 
 purge:
 	-rm -f bdash
+	-rm -f records.txt

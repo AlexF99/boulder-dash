@@ -1,4 +1,9 @@
+DESENVOLVEDOR:
+Alexandre de Oliveira Plugge Freitas
+
 INSTRUCOES:
-Pegue os diamantes, cada nivel tem um minimo para passar de nivel.
+Pegue os diamantes, cada nivel tem um minimo de diamantes para passar de nivel (indicado no header).
 Use as setas do teclado para controlar o rockford.
+Nao deixe as pedras cairem em cima do rockford.
 Use PgUp e PgDn para navegar entre os niveis.
+Use a tecla ESC para sair do jogo.
