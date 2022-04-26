@@ -7,3 +7,5 @@ Use as setas do teclado para controlar o rockford.
 Nao deixe as pedras cairem em cima do rockford.
 Use PgUp e PgDn para navegar entre os niveis.
 Use a tecla ESC para sair do jogo.
+Se morrer, sera apresentada uma tela com as 10 maiores pontuacoes.
+Voce pode jogar novamente pressionando a tecla ENTER.

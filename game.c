@@ -133,7 +133,6 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                     diamond_easter_egg(mapa);
                     diamond_ee = 0;
                 }
-                
             }
 
             if (event.timer.source == allegro_vars->tick)
@@ -141,13 +140,13 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                 if (rockford->alive)
                 {
                     if (key[ALLEGRO_KEY_UP])
-                        move_rockford(mapa, rockford, 'u', &done, &next_level);
+                        move_rockford(mapa, rockford, 'u', &next_level);
                     else if (key[ALLEGRO_KEY_DOWN])
-                        move_rockford(mapa, rockford, 'd', &done, &next_level);
+                        move_rockford(mapa, rockford, 'd', &next_level);
                     else if (key[ALLEGRO_KEY_LEFT])
-                        move_rockford(mapa, rockford, 'l', &done, &next_level);
+                        move_rockford(mapa, rockford, 'l', &next_level);
                     else if (key[ALLEGRO_KEY_RIGHT])
-                        move_rockford(mapa, rockford, 'r', &done, &next_level);
+                        move_rockford(mapa, rockford, 'r', &next_level);
                     else if (key[ALLEGRO_KEY_PGUP])
                     {
                         if (level[13] > '0')
@@ -169,6 +168,15 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
                     for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                         key[i] &= KEY_SEEN;
+                
+                    gravity('o', '0', mapa, rockford);
+                    gravity('*', '5', mapa, rockford);
+                } else {
+                    if (key[ALLEGRO_KEY_ENTER]) {
+                        game_over = 0;
+                        leaderboard = false;
+                        mapa = le_nivel(level, &rockford, next_level);
+                    }
                 }
 
                 if (key[ALLEGRO_KEY_ESCAPE])
@@ -177,8 +185,6 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                 if (key[ALLEGRO_KEY_H] || key[ALLEGRO_KEY_F1])
                     instructions = !instructions;
 
-                gravity('o', '0', mapa, rockford, &done);
-                gravity('*', '5', mapa, rockford, &done);
 
                 if (!rockford->alive && game_over < 10)
                 {
@@ -213,11 +219,13 @@ void game_main_loop(t_allegro_vars *allegro_vars)
                 mapa = le_nivel(level, &rockford, next_level);
                 next_level = 0;
             }
-            else
+            else if (game_over < 10)
             {
-                // zerou o jogo
-                save_records(rockford->points);
-                leaderboard = true;
+                if (game_over == 0)
+                    save_records(rockford->points);
+                game_over++;
+                if (game_over == 9)
+                    leaderboard = true;
             }
         }
 

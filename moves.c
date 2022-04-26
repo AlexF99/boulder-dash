@@ -3,7 +3,7 @@
 #include "rockford.h"
 #include "map.h"
 
-void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done, int *next_level)
+void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *next_level)
 {
     char destino;
 
@@ -80,7 +80,7 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *done,
     mapa->game_mat[rockford->y][rockford->x] = '@';
 }
 
-void gravity(char element, char base, t_map *mapa, t_rockford *rockford, int *done)
+void gravity(char element, char base, t_map *mapa, t_rockford *rockford)
 {
     int i, j;
 
