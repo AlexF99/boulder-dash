@@ -58,7 +58,7 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
 void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_FONT* font, bool instructions, bool leaderboard)
 {
     if (instructions) {
-        show_txt(font, "instructions.txt");
+        show_txt(font, "./misc/instructions.txt");
     } else if (leaderboard) {
         show_txt(font, "records.txt");
     } else {
