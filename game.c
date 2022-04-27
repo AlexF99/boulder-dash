@@ -28,6 +28,12 @@ t_allegro_vars *vars_init()
 
     t_allegro_vars *allegro_vars = malloc(sizeof(t_allegro_vars));
 
+    if (allegro_vars == NULL)
+    {
+        fprintf(stderr, "erro de malloc");
+        exit(1);
+    }
+
     must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
 
@@ -58,6 +64,12 @@ t_allegro_vars *vars_init()
 
     allegro_vars->sounds = malloc(NUM_SOUNDS * sizeof(ALLEGRO_SAMPLE *));
 
+    if (allegro_vars->sounds == NULL)
+    {
+        fprintf(stderr, "erro de malloc");
+        exit(1);
+    }
+
     allegro_vars->sounds[0] = al_load_sample("./assets/zdiamond.wav");
     must_init(allegro_vars->sounds[0], "zdiamond");
     allegro_vars->sounds[1] = al_load_sample("./assets/zlevel.wav");
@@ -65,6 +77,12 @@ t_allegro_vars *vars_init()
 
     // carrega assets
     allegro_vars->assets = malloc(NUM_ASSETS * sizeof(ALLEGRO_BITMAP *));
+
+    if (allegro_vars->assets == NULL)
+    {
+        fprintf(stderr, "erro de malloc");
+        exit(1);
+    }
 
     allegro_vars->assets[0] = al_load_bitmap("./assets/rockford.png");
     must_init(allegro_vars->assets[0], "rockford");

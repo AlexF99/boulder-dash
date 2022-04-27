@@ -15,6 +15,7 @@ int *get_records_array()
 
     if (!records_file || records_file == NULL)
     {
+        // se o arquivo nao existir, cria um
         records_file = fopen("records.txt", "w");
         fprintf(records_file, "records:\n");
     }

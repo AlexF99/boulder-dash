@@ -37,16 +37,25 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford, int next_level)
     }
 
     mapa = malloc(sizeof(t_map));
+    if (mapa == NULL)
+    {
+        fprintf(stderr, "erro de malloc");
+        exit(1);
+    }
     mapa->door = 0;
 
     if (!next_level)
     {
         *rockford = malloc(sizeof(t_rockford));
+        if (*rockford == NULL)
+        {
+            fprintf(stderr, "erro de malloc");
+            exit(1);
+        }
         (*rockford)->alive = 1;
         (*rockford)->points = 0;
     }
     (*rockford)->diamonds = 0;
-
 
     fscanf(nivel_txt, "%d %d\n%d %d\n%d\n", &mapa->linhas, &mapa->colunas, &mapa->diamonds, &mapa->points_per_diamond, &mapa->time_left);
 
