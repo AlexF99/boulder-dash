@@ -32,8 +32,10 @@ void move_rockford(t_map *mapa, t_rockford *rockford, char direction, int *next_
     {
         if (destino == 's')
         {
-            if (mapa->door)
+            if (mapa->door) {
+                al_play_sample(sounds[1], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 *next_level = 1;
+            }
         }
         else
         {

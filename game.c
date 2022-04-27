@@ -12,7 +12,7 @@
 #define KEY_RELEASED 2
 
 #define NUM_ASSETS 9
-#define NUM_SOUNDS 1
+#define NUM_SOUNDS 2
 
 void must_init(bool test, const char *description)
 {
@@ -58,8 +58,10 @@ t_allegro_vars *vars_init()
 
     allegro_vars->sounds = malloc(NUM_SOUNDS * sizeof(ALLEGRO_SAMPLE *));
 
-    allegro_vars->sounds[0] = al_load_sample("./assets/zdirt.wav");
-    must_init(allegro_vars->sounds[0], "zdirt");
+    allegro_vars->sounds[0] = al_load_sample("./assets/zdiamond.wav");
+    must_init(allegro_vars->sounds[0], "zdiamond");
+    allegro_vars->sounds[1] = al_load_sample("./assets/zlevel.wav");
+    must_init(allegro_vars->sounds[1], "zlevel");
 
     // carrega assets
     allegro_vars->assets = malloc(NUM_ASSETS * sizeof(ALLEGRO_BITMAP *));
@@ -181,11 +183,14 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
                     for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                         key[i] &= KEY_SEEN;
-                
+
                     gravity('o', '0', mapa, rockford);
                     gravity('*', '5', mapa, rockford);
-                } else {
-                    if (key[ALLEGRO_KEY_ENTER]) {
+                }
+                else
+                {
+                    if (key[ALLEGRO_KEY_ENTER])
+                    {
                         game_over = 0;
                         leaderboard = false;
                         mapa = le_nivel(level, &rockford, next_level);
@@ -197,7 +202,6 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
                 if (key[ALLEGRO_KEY_H] || key[ALLEGRO_KEY_F1])
                     instructions = !instructions;
-
 
                 if (!rockford->alive && game_over < 10)
                 {
@@ -260,7 +264,7 @@ void vars_destroy(t_allegro_vars *allegro_vars)
 
     for (int i = 0; i < NUM_SOUNDS; i++)
         al_destroy_sample(allegro_vars->sounds[i]);
-    
+
     free(allegro_vars->assets);
     al_destroy_font(allegro_vars->font);
     al_destroy_display(allegro_vars->disp);
