@@ -35,7 +35,7 @@ ALLEGRO_BITMAP *get_asset(ALLEGRO_BITMAP **assets, char key)
         return assets[0];
     case '-': // wall
         return assets[1];
-    case 'x': // explosion (magic, for now)
+    case 'x': // explosion
         return assets[2];
     case '#': // steel wall
         return assets[3];

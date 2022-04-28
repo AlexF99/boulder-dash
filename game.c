@@ -90,8 +90,8 @@ t_allegro_vars *vars_init()
     must_init(allegro_vars->assets[0], "rockford");
     allegro_vars->assets[1] = al_load_bitmap("./assets/wall.png");
     must_init(allegro_vars->assets[1], "wall");
-    allegro_vars->assets[2] = al_load_bitmap("./assets/magic.png");
-    must_init(allegro_vars->assets[2], "magic");
+    allegro_vars->assets[2] = al_load_bitmap("./assets/dying.jpeg");
+    must_init(allegro_vars->assets[2], "dying");
     allegro_vars->assets[3] = al_load_bitmap("./assets/steel.png");
     must_init(allegro_vars->assets[3], "steel");
     allegro_vars->assets[4] = al_load_bitmap("./assets/dirt.png");
