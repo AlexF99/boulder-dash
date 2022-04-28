@@ -12,7 +12,7 @@
 #define KEY_RELEASED 2
 
 #define NUM_ASSETS 9
-#define NUM_SOUNDS 2
+#define NUM_SOUNDS 3
 
 void must_init(bool test, const char *description)
 {
@@ -74,6 +74,8 @@ t_allegro_vars *vars_init()
     must_init(allegro_vars->sounds[0], "zdiamond");
     allegro_vars->sounds[1] = al_load_sample("./assets/zlevel.wav");
     must_init(allegro_vars->sounds[1], "zlevel");
+    allegro_vars->sounds[2] = al_load_sample("./assets/zover1.wav");
+    must_init(allegro_vars->sounds[2], "zover");
 
     // carrega assets
     allegro_vars->assets = malloc(NUM_ASSETS * sizeof(ALLEGRO_BITMAP *));
@@ -223,6 +225,8 @@ void game_main_loop(t_allegro_vars *allegro_vars)
 
                 if (!rockford->alive && game_over < 10)
                 {
+                    al_play_sample(allegro_vars->sounds[2], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    
                     if (game_over == 0)
                         save_records(rockford->points);
                     game_over++;
