@@ -27,7 +27,6 @@ t_map *le_nivel(char *nome_arquivo, t_rockford **rockford, int next_level)
     t_map *mapa = NULL;
     FILE *nivel_txt = NULL;
     int i, j;
-    char new_char;
 
     nivel_txt = fopen(nome_arquivo, "r");
     if (!nivel_txt)

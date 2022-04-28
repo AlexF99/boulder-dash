@@ -102,7 +102,7 @@ void render(t_map *mapa, ALLEGRO_BITMAP **assets, t_rockford *rockford, ALLEGRO_
 
         al_draw_text(font, al_map_rgb(255, 255, 255), 1200, 12, 0, time_left);
 
-        for (int i = 0; i < mapa->linhas; i++)
+        for (i = 0; i < mapa->linhas; i++)
         {
             for (j = 0; j < mapa->colunas; j++)
             {
