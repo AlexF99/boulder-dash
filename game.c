@@ -74,7 +74,7 @@ t_allegro_vars *vars_init()
     must_init(allegro_vars->sounds[0], "zdiamond");
     allegro_vars->sounds[1] = al_load_sample("./assets/zlevel.wav");
     must_init(allegro_vars->sounds[1], "zlevel");
-    allegro_vars->sounds[2] = al_load_sample("./assets/zover1.wav");
+    allegro_vars->sounds[2] = al_load_sample("./assets/zover.wav");
     must_init(allegro_vars->sounds[2], "zover");
 
     // carrega assets
